@@ -2,7 +2,7 @@
 
     npm install ftx-api-rest
 
-API wrapper for the [Bitmex REST API](https://www.bitmex.com/api/explorer/). Please refer to [their documentation](https://www.bitmex.com/api/explorer/) for all calls explained. Check out `sample.js` for some example calls.
+API wrapper for the [FTX REST API](https://docs.ftx.com/#rest-api). Please refer to [their documentation](https://docs.ftx.com/#rest-api) for all calls explained. Check out `sample.js` for lib usage.
 
 This is a low level wrapper with zero dependencies focussed on speed:
 
@@ -11,9 +11,9 @@ This is a low level wrapper with zero dependencies focussed on speed:
 - No third party libraries
 - allows you to pre compile your message (see below under low latency usage)
 
-This is a fork based of my bimex library: 
+This is a fork based of my bimex library: https://github.com/askmike/bitmex-simple-rest
 
-Used by my low latency market maker that's running in production. I don't think you can go much faster in nodejs without rewriting [Node.js' core http library](https://nodejs.org/api/http.html#http_http_request_options_callback) (if you think you can, feel free to open an issue or propose a PR).
+Used by my low(ish) latency arb system that's running in production. I don't think you can go much faster in nodejs without rewriting [Node.js' core http library](https://nodejs.org/api/http.html#http_http_request_options_callback) (if you think you can, feel free to open an issue or propose a PR).
 
 ## Usage
 
@@ -26,14 +26,13 @@ Sending an API request to FTX requires hashing the payload with your API key. **
 This library allows you to prepare an API request draft before hand (doing all the heavy work). The microsecond you realize you actually want to send it you simply send the draft you created previously:
 
     // create the draft before hand
-    const draft = bm.createDraft({
-      path: '/user/margin',
+    const draft = ftx.createDraft({
       method: 'GET',
-      data: { currency: 'XBt' }
+      path: '/account'
     });
 
     // later when you actually want to send
-    const { data, headers } = await bm.requestDraft(draft);
+    const data = await ftx.requestDraft(draft);
 
 Note that this only works in scenarios where you can estimate what will happen or which scenarios might happen: You can create drafts for all of them and only end up sending one later.
 
@@ -44,4 +43,4 @@ Note that this only works in scenarios where you can estimate what will happen o
 
 ## Final
 
-If this library is helping you trade better on Bitmex feel free to use [my ref link](https://www.bitmex.com/register/VDPANj). You'll get a 10% fee discount for the first 6 months, lowering your market fees (on the perpetual swap) from 0.075% to a mere 0.0675%!
+If this library is helping you trade better on FTX feel free to use [my ref link](https://ftx.com/#a=1275753).
