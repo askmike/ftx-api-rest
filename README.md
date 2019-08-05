@@ -9,9 +9,10 @@ This is a low level wrapper with zero dependencies focussed on speed:
 - Disables Nagle's algorithm
 - No complex code
 - No third party libraries
-- allows you to pre compile your message (see below under low latency usage)
+- Allows you to pre compile your message (see below under low latency usage)\
+- Supports keep-alive
 
-This is a fork based of my bimex library: https://github.com/askmike/bitmex-simple-rest
+This is a fork based of my bitmex library: https://github.com/askmike/bitmex-simple-rest
 
 Used by my low(ish) latency arb system that's running in production. I don't think you can go much faster in nodejs without rewriting [Node.js' core http library](https://nodejs.org/api/http.html#http_http_request_options_callback) (if you think you can, feel free to open an issue or propose a PR).
 

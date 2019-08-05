@@ -12,6 +12,12 @@ class FTXRest {
     this.ua = USER_AGENT;
     this.timeout = 90 * 1000;
 
+    this.agent = new https.Agent({
+      keepAlive: true,
+      timeout: 90 * 1000,
+      keepAliveMsecs: 1000 * 60
+    });
+
     if(!config) {
       return;
     }
@@ -63,6 +69,7 @@ class FTXRest {
       host: 'ftx.com',
       path: path,
       method,
+      agent: this.agent,
       headers: {
         'User-Agent': this.ua,
         'content-type' : 'application/json',
