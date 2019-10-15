@@ -53,8 +53,8 @@ class FTXRest {
     let payload = '';
     if(method === 'GET' && data) {
       path += '?' + querystring.stringify(data);
-    } else if(method === 'DELETE') {
-      // cancel order or cancel all
+    } else if(method === 'DELETE' && typeof data === 'number') {
+      // cancel single order
       path += data;
     } else if(data) {
       payload = JSON.stringify(data);
@@ -83,6 +83,11 @@ class FTXRest {
       timeout,
       payload
     };
+
+    // required for delete all
+    if(method === 'DELETE' && payload !== '') {
+      options.headers['Content-Length'] = payload.length;
+    }
 
     if(this.subaccount) {
       options.headers['FTX-SUBACCOUNT'] = this.subaccount;
