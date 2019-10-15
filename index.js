@@ -122,7 +122,9 @@ class FTXRest {
             }
 
             console.error('ERROR!', res.statusCode, message);
-            return reject(new Error(message));
+            const error = new Error(message.error)
+            error.statusCode = res.statusCode;
+            return reject(error);
           }
 
           let data;
