@@ -6,6 +6,7 @@ const version = require('./package.json').version;
 const name = require('./package.json').name;
 
 const USER_AGENT = `${name}@${version}`;
+const DEFAULT_ENDPOINT = 'ftx.com';
 
 class FTXRest {
   constructor(config) {
@@ -38,6 +39,8 @@ class FTXRest {
     if(config.userAgent) {
       this.ua += ' | ' + config.userAgent;
     }
+
+    this.endpoint = config.endpoint || DEFAULT_ENDPOINT;
   }
 
   // this fn can easily take more than 0.15ms due to heavy crypto functions
@@ -66,7 +69,7 @@ class FTXRest {
       .update(start + method + path + payload).digest('hex');
 
     const options = {
-      host: 'ftx.com',
+      host: this.endpoint,
       path: path,
       method,
       agent: this.agent,
