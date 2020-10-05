@@ -7,6 +7,7 @@ const name = require('./package.json').name;
 
 const USER_AGENT = `${name}@${version}`;
 const DEFAULT_ENDPOINT = 'ftx.com';
+const DEFAULT_HEADER_PREFIX = 'FTX';
 
 class FTXRest {
   constructor(config) {
@@ -41,6 +42,7 @@ class FTXRest {
     }
 
     this.endpoint = config.endpoint || DEFAULT_ENDPOINT;
+    this.headerPrefix = config.headerPrefix || DEFAULT_HEADER_PREFIX;
   }
 
   // this fn can easily take more than 0.15ms due to heavy crypto functions
@@ -78,9 +80,9 @@ class FTXRest {
         'content-type' : 'application/json',
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'FTX-TS': start,
-        'FTX-KEY': this.key,
-        'FTX-SIGN': signature
+        [this.headerPrefix + '-TS']: start,
+        [this.headerPrefix + '-KEY']: this.key,
+        [this.headerPrefix + '-SIGN']: signature
       },
       // merely passed through for requestDraft
       timeout,
@@ -93,7 +95,7 @@ class FTXRest {
     }
 
     if(this.subaccount) {
-      options.headers['FTX-SUBACCOUNT'] = this.subaccount;
+      options.headers[this.headerPrefix + '-SUBACCOUNT'] = this.subaccount;
     }
 
     return options;
