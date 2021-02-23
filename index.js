@@ -48,7 +48,7 @@ class FTXRest {
   // this fn can easily take more than 0.15ms due to heavy crypto functions
   // if your application is _very_ latency sensitive prepare the drafts
   // before you realize you want to send them.
-  createDraft({path, method, data, timeout}) {
+  createDraft({path, method, data, timeout, subaccount}) {
     if(!timeout) {
       timeout = this.timeout;
     }
@@ -94,8 +94,8 @@ class FTXRest {
       options.headers['Content-Length'] = payload.length;
     }
 
-    if(this.subaccount) {
-      options.headers[this.headerPrefix + '-SUBACCOUNT'] = this.subaccount;
+    if(this.subaccount || subaccount) {
+      options.headers[this.headerPrefix + '-SUBACCOUNT'] = this.subaccount || subaccount
     }
 
     return options;
