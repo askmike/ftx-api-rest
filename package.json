@@ -1,6 +1,6 @@
 {
   "name": "ftx-api-rest",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "simple rest API wrapper for FTX",
   "main": "index.js",
   "scripts": {
